@@ -1,0 +1,11 @@
+<sl-radio-group name="{{ question["id"] }}"
+                {% if question["value"] %}value="{{ question["value"] }}"{% endif %}>
+    <ul class="form-list">
+        <li>
+            <sl-radio value="Y">Yes</sl-radio>
+        </li>
+        <li>
+            <sl-radio value="N">No</sl-radio>
+        </li>
+    </ul>
+</sl-radio-group>

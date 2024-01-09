@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <section>
+        <header class="toolbar">
+            <h2 class="title">Eviction Summary</h2>
+            <nav>
+                <sl-button size="small">
+                    <sl-icon slot="prefix" name="send"></sl-icon>
+                    Share
+                </sl-button>
+                <sl-button size="small">
+                    <sl-icon slot="prefix" name="cloud-download"></sl-icon>
+                    Download PDF
+                </sl-button>
+                <sl-button size="small" variant="danger">
+                    <sl-icon slot="prefix" name="trash"></sl-icon>
+                    Delete
+                </sl-button>
+            </nav>
+        </header>
+        <div class="reference"><strong>Reference:</strong>
+            {% if checklist.get_response("reference") != None %}
+                {{ checklist.get_response("reference") }}
+            {% else %}
+                {{ checklist.id }}
+            {% endif %}
+        </div>
+    </section>
+
+    <article>
+        <nav>
+            <h2>Contents</h2>
+            <a href="#observations">Observations</a>
+            <a href="#tenancy">Tenancy details</a>
+            <a href="#notice">Details of notice</a>
+        </nav>
+        <section>
+
+            {% include 'results/observations.html' %}
+            {% include 'results/tenancy.html' %}
+            {% include 'results/notice.html' %}
+        </section>
+    </article>
+{% endblock %}

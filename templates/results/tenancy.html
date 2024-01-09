@@ -1,0 +1,19 @@
+<h2 id="tenancy">Tenancy details</h2>
+<dl>
+    <dt>Original start date</dt>
+    <dd>
+        {{ checklist.get_response("start_date").strftime("%d/%b/%Y") }}
+    </dd>
+    <dd>
+        {{ checklist.get_response("start_date")|time_ago }}
+    </dd>
+
+    {% if checklist.get_response("deposit") != None %}
+        <dt>Deposit</dt>
+        {% if checklist.get_response("deposit") == 'Y' %}
+            £{{ checklist.get_response("deposit_amount") }} paid
+        {% else %}
+            Not paid
+        {% endif %}
+    {% endif %}
+</dl>

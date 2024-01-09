@@ -1,0 +1,33 @@
+  s21:
+    name: "\"FORM 6A\" - Section 21"
+    rule: Housing Act 1988, s 21
+    has_grounds: N
+    notice:
+        - 8
+        - weeks
+
+  s8:
+    name: "\"Form No. 3\" - Section 8"
+    rule: Housing Act 1988, s 8
+    has_grounds: Y
+
+  s83:
+    name: Section 83
+    rule: Housing Act 1985, s 83
+    has_grounds: Y
+    notice:
+        - 4
+        - weeks
+
+  n2q:
+    name: Notice to quit
+    rule: Protection From Eviction Act 1977 (Notice to Quit)
+    has_grounds: N
+    notice:
+        - 4
+        - weeks
+
+  x:
+    name: None of these
+    has_grounds: N
+    rule: Unknown

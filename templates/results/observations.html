@@ -1,0 +1,51 @@
+<h2 id="observations">Observations</h2>
+<p>
+    This section includes any legal notes or observations that have been calculated
+    based on your answers.
+</p>
+
+<ol>
+    {% if checklist.get_response('notice_type') == 'x' %}
+        <li>
+            <h4>No or invalid notice given</h4>
+            <p>
+                It is a requirement that your landlord gives you notice in writing,
+                using the proper forms.
+            </p>
+            <p>
+                If your landlord has not given you any paperwork, or what they have given you
+                is not on one of the proper government forms, then the eviction is not valid.
+            </p>
+        </li>
+    {% endif %}
+
+    {% if checklist.get_notice_length() < checklist.get_notice_type()['required_notice'] %}
+        <li>
+            <h4>Not enough notice given</h4>
+            <p>
+                Eviction has been started under
+                {{ checklist.get_notice_type()['rule'] }}
+                {% if checklist.get_s8_ground() != None %}
+                    - {{ checklist.get_s8_ground()['name'] }},
+                {% endif %}
+                which requires a minimum of
+                {{ checklist.get_notice_type()['required_notice']|notice_period }}
+                notice. You have only been given
+                {{ checklist.get_notice_length()|notice_period }}
+                notice.
+            </p>
+        </li>
+    {% endif %}
+
+    {% if not checklist.get_s8_ground()['mandatory'] %}
+        <li>
+            <h4>Grounds are discretionary</h4>
+            <p>
+                The grounds used to evict you ({{ checklist.get_s8_grounds()['name'] }} are
+                discretionary. This means that not only does the landlord have to prove that
+                the grounds apply to your situation, they also have to persuade the judge that
+                it's reasonable to evict you in this case.
+            </p>
+        </li>
+    {% endif %}
+</ol>

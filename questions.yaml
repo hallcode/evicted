@@ -1,0 +1,109 @@
+---
+id: is_first_party
+label: Is this about your tenancy?
+type: choice
+options:
+  Y: This is about my situation
+  N: I am completing this on behalf of someone else
+---
+id: reference
+label: Do you have a reference number?
+description:
+  This can be anything you'd like to use to refer to this case. It will be shown
+  at the top of every page.
+  If you don't you can leave this blank.
+type: text
+---
+id: landlord_type
+label: What kind of landlord do you have?
+description:
+  If your landlord is a charitable housing trust, select Housing Association.
+type: choice
+options:
+  private: Private landlord (including a friend or family member)
+  housaoc: Housing association
+  la: Local council
+  employer: Your employer
+  uni: A university or publicly funded further education establishment
+---
+id: start_date
+label: When did your tenancy start?
+description: The tenancy starts on the day you move in, or the date specified on your tenancy agreement.
+type: date
+---
+id: fixed_term
+label: When you moved in, was the tenancy for a fixed term?
+type: yesno
+---
+id: fixed_term_length
+label: How many months was the initial fixed term?
+type: text
+---
+id: still_fixed_term
+label: Is the tenancy still on a fixed term?
+description: This will be yes if you have signed a new agreement which is still in effect.
+type: yesno
+---
+id: written_notice
+label: Did you get a written letter telling you about the eviction?
+type: yesno
+---
+id: notice_type
+label: What kind of letter did you get?
+description:
+  The landlord must serve notice with a specific letter, if you're not sure, look at the
+  title of the first page of the letter.
+type: choice
+options: notice_types.yaml
+---
+id: section_8_grounds
+label: What are the grounds for the eviction?
+description:
+  A section 8 eviction requires the landlord to tell you why you're being evicted, this
+  must be on the letter/form you were given.
+  Don't worry if the terms in the list are confusing, the letter should state the number
+  (e.g. Ground 2) of the ground being used.
+type: choice
+options: s8grounds.yaml
+---
+id: notice_of_ground
+label: Does your tenancy agreement allow the use of this ground?
+description:
+  To use this ground for a section 8 eviction, they must have told you before the
+  start of the tenancy that they might use it. This is probably in your tenancy agreement,
+  but it might be written in an email or letter too.
+type: choice
+options:
+  Y: Yes, my landlord told me they might use this ground to evict me
+  N: No, they didn't say it anywhere
+  X: I'm not sure
+---
+id: educational_establishment
+label: Is your landlord a university or publicly funded educational institution?
+type: yesno
+---
+id: date_of_notice
+label: What is the date on the letter?
+type: date
+---
+id: date_received
+label: What date did you receive the letter?
+type: date
+---
+id: end_date_yn
+label: Does the letter give a date you must leave by?
+type: yesno
+---
+id: end_of_tenancy_date
+label: What date does the letter 
+  say you must leave by?
+type: date
+---
+id: deposit
+label: Did you pay a deposit when you moved in?
+type: yesno
+---
+id: deposit_amount
+label: How much deposit did you pay?
+description: Round it to the nearest pound.
+type: number

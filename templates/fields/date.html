@@ -1,0 +1,23 @@
+<section class="date">
+    <sl-input name="{{ question["id"] }}_day"
+              type="number"
+              label="Day"
+              maxlength="2"
+              no-spin-buttons
+              {% if question["value"] %}value="{{ question["value"].day }}"{% endif %}
+    ></sl-input>
+    <sl-input name="{{ question["id"] }}_month"
+              type="number"
+              label="Month"
+              maxlength="2"
+              no-spin-buttons
+              {% if question["value"] %}value="{{ question["value"].month }}"{% endif %}
+    ></sl-input>
+    <sl-input name="{{ question["id"] }}_year"
+              type="number"
+              label="Year"
+              maxlength="4"
+              no-spin-buttons
+              {% if question["value"] %}value="{{ question["value"].year }}"{% endif %}
+    ></sl-input>
+</section>

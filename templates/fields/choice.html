@@ -1,0 +1,40 @@
+{% if not question["multi"] %}
+    {% if question["options"]|length <= 5 %}
+        <sl-radio-group name="{{ question["id"] }}"
+                        {% if question["value"] %}value="{{ question["value"] }}"{% endif %}>
+            <ul class="form-list">
+                {% for value, label in question["options"].items() %}
+                    <li>
+                        <sl-radio value="{{ value }}">{{ label }}</sl-radio>
+                    </li>
+                {% endfor %}
+            </ul>
+        </sl-radio-group>
+    {% else %}
+        <sl-select name="{{ question["id"] }}"
+                   {% if question["value"] %}value="{{ question["value"] }}"{% endif %}>
+            {% for value, label in question["options"].items() %}
+                <sl-option value="{{ value }}">{{ label }}</sl-option>
+            {% endfor %}
+        </sl-select>
+    {% endif %}
+
+{% else %}
+
+    <ul class="form-list">
+        {% for value, label in question["options"].items() %}
+            <li>
+                <sl-checkbox name="{{ question["id"] }}"
+                             value="{{ value }}"
+                        {% if question["value"] %}
+                            {% if value in question["value"] %}>
+                                checked
+                            {% endif %}
+                        {% endif %}
+                >
+                {{ label }}
+                </sl-checkbox>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

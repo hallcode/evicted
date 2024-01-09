@@ -1,0 +1,46 @@
+<h2 id="notice">Details of notice given</h2>
+<dl>
+    <dt>Notice given under</dt>
+    <dd>
+        {{ checklist.NOTICE_MAP[checklist.get_response("notice_type")]["name"] }}
+    </dd>
+
+    <dt>Date of notice</dt>
+    <dd>
+        <table>
+            <tr>
+                <th>Sent</th>
+                <th>Recieved</th>
+            </tr>
+
+            <tr>
+                <td>{{ checklist.get_response('date_of_notice').strftime("%d/%b/%Y") }}</td>
+                <td>{{ checklist.get_response('date_received').strftime("%d/%b/%Y") }}</td>
+            </tr>
+        </table>
+    </dd>
+
+    {% if checklist.get_response("notice_type") == 's8' %}
+        {% if checklist.get_s8_ground() != None %}
+            <dt>Grounds</dt>
+            <dd>{{ checklist.get_s8_ground()['name'] }}</dd>
+
+            <dt>Notice required</dt>
+            <dd>
+                {{ checklist.get_notice_type()['required_notice']|notice_period }}
+            </dd>
+            <dd>
+                {{ checklist.get_s8_ground()['notice_end'].strftime("%d/%b/%Y") }}
+            </dd>
+        {% else %}
+            <dt>Grounds</dt>
+            <dd>None given</dd>
+        {% endif %}
+    {% endif %}
+
+    {% if checklist.get_response("end_of_tenancy_date") %}
+        <dt>Actual notice</dt>
+        <dd>{{ checklist.get_notice_length()|notice_period }}</dd>
+        <dd>{{ checklist.get_response("end_of_tenancy_date").strftime("%d/%b/%Y") }}</dd>
+    {% endif %}
+</dl>

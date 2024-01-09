@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <section>
+        {{ body_text|safe }}
+        <footer>
+            <sl-button href="/checklist/start" variant="success">Start now</sl-button>
+        </footer>
+    </section>
+{% endblock %}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        {% if page_title %}
+            {{ page_title }} |
+        {% endif %}
+        Evicted Guide
+    </title>
+
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.12.0/cdn/themes/light.css"/>
+    <script type="module"
+            src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.12.0/cdn/shoelace-autoloader.js"></script>
+
+    <link href="https://fonts.bunny.net/css?family=atkinson-hyperlegible:400,400i,700,700i" rel="stylesheet"/>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header id="site-header">
+    <hgroup>
+        <h1>Evicted!</h1>
+        <p class="subtitle">The checklist for tenants</p>
+    </hgroup>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/guidance">Guidance</a>
+        <a href="/about">About</a>
+    </nav>
+</header>
+<main>
+    {% block body %}{% endblock %}
+</main>
+<footer>
+    <header>
+        <p id="disclaimer" class="legal">
+            <strong>Important</strong>: This website is not legal advice;
+            you are strongly advised to seek qualified legal
+            advice from a reputable solicitor, charity, or renters' union
+            before you take any action based off the information on this
+            website.
+        </p>
+    </header>
+</footer>
+</body>
+</html>

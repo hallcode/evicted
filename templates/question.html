@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <section>
+        <form id="question-form"
+              action="{{ url_for("save_response", checklist_id=checklist.id) }}"
+              method="post">
+            <input hidden name="question_id" value="{{ question["id"] }}"/>
+            {% if form_token %}
+                <input hidden name="token" value="{{ form_token }}"/>
+            {% endif %}
+            <label>
+                <header>
+                    <h2>{{ question["label"] }}</h2>
+                    {% if question["description"] %}
+                        <p>
+                            {{ question["description"] }}
+                        </p>
+                    {% endif %}
+                </header>
+
+                {% include question["field_template"] %}
+
+            </label>
+            <footer class="form-footer">
+                <sl-button type="submit" variant="primary">Next</sl-button>
+            </footer>
+        </form>
+    </section>
+{% endblock %}
