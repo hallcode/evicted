@@ -1,26 +1,26 @@
 "1":
   name: Ground 1 (Landlord wishes to live in the property)
-  prior_notice: Y
-  prior_notice_discr: Y
-  mandatory: Y
+  prior_notice: true
+  prior_notice_discr: true
+  mandatory: true
   notice:
     - 8
     - weeks
 
 "2":
   name: Ground 2 (Repossession by a the mortgaging bank)
-  prior_notice: Y
-  prior_notice_discr: Y
-  mandatory: Y
+  prior_notice: true
+  prior_notice_discr: true
+  mandatory: true
   notice:
     - 8
     - weeks
 
 "3":
   name: Ground 3 (Tenancy preceded by a 'holiday let')
-  prior_notice: Y
-  prior_notice_discr: N
-  mandatory: Y
+  prior_notice: true
+  prior_notice_discr: false
+  mandatory: true
   max_term:
     - 32
     - weeks
@@ -30,8 +30,8 @@
 
 "4":
   name: "Ground 4 ('Out of term' letting by specified educational institution)"
-  prior_notice: N
-  mandatory: Y
+  prior_notice: false
+  mandatory: true
   landlord:
     - uni
   max_term:
@@ -43,16 +43,16 @@
 
 "5":
   name: Ground 5 (Property required for a minister of religion)
-  prior_notice: Y
-  mandatory: Y
+  prior_notice: true
+  mandatory: true
   notice:
     - 8
     - weeks
 
 "6":
   name: Ground 6 (Property required for redevelopment)
-  prior_notice: N
-  mandatory: Y
+  prior_notice: false
+  mandatory: true
   landlord:
     - la
     - housaoc
@@ -62,97 +62,97 @@
 
 "7":
   name: Ground 7 (Death of the tenant)
-  prior_notice: N
-  mandatory: Y
+  prior_notice: false
+  mandatory: true
   notice:
     - 8
     - weeks
 
 "7A":
   name: Ground 7A (Serious anti-social behaviour)
-  prior_notice: N
-  mandatory: Y
+  prior_notice: false
+  mandatory: true
   notice:
     - 8
     - weeks
 
 "7B":
   name: Ground 7B (Occupier without the right to rent)
-  prior_notice: N
-  mandatory: Y
+  prior_notice: false
+  mandatory: true
   notice:
     - 2
     - weeks
 
 "8":
   name: Ground 8 (Serious rent arrears)
-  prior_notice: N
-  mandatory: Y
+  prior_notice: false
+  mandatory: true
   notice:
     - 2
     - weeks
 
 "9":
   name: Ground 9 (Suitable alternative accommodation)
-  prior_notice: N
-  mandatory: N
+  prior_notice: false
+  mandatory: false
   notice:
     - 8
     - weeks
 
 "10":
   name: Ground 10 (Some rent arrears)
-  prior_notice: N
-  mandatory: N
+  prior_notice: false
+  mandatory: false
   notice:
     - 2
     - weeks
 
 "11":
   name: Ground 11 (Delayed rent)
-  prior_notice: N
-  mandatory: N
+  prior_notice: false
+  mandatory: false
   notice:
     - 2
     - weeks
 
 "12":
   name: Ground 12 (Breach of the tenancy agreement by the tenant)
-  prior_notice: N
-  mandatory: N
+  prior_notice: false
+  mandatory: false
   notice:
     - 2
     - weeks
 
 "13":
   name: Ground 13 (Damage or neglect of the property)
-  prior_notice: N
-  mandatory: N
+  prior_notice: false
+  mandatory: false
   notice:
     - 2
     - weeks
 
 "14":
   name: Ground 14 (Nuisance or anti-social behaviour)
-  prior_notice: N
-  mandatory: N
+  prior_notice: false
+  mandatory: false
   notice:
     - 0
     - days
 
 "14ZA":
   name: Ground 14ZA (Tenant convicted of a serious offence during a riot)
-  prior_notice: N
+  prior_notice: false
   country: England
-  mandatory: N
+  mandatory: false
   notice:
     - 2
     - weeks
 
 "14A":
   name: Ground 14A (Domestic violence)
-  prior_notice: N
-  mandatory: N
+  prior_notice: false
+  mandatory: false
   landlord:
     - housaoc
     - la
@@ -162,16 +162,16 @@
 
 "15":
   name: Ground 15 (Damage or neglect of the landlord's furniture)
-  prior_notice: N
-  mandatory: N
+  prior_notice: false
+  mandatory: false
   notice:
     - 2
     - weeks
 
 "16":
   name: Ground 16 (End of employment of the tenant by the landlord)
-  prior_notice: N
-  mandatory: N
+  prior_notice: false
+  mandatory: false
   landlord:
     - employer
   notice:
@@ -180,8 +180,8 @@
 
 "17":
   name: Ground 17 (Tenancy granted due to false statement)
-  prior_notice: N
-  mandatory: N
+  prior_notice: false
+  mandatory: false
   notice:
     - 2
     - weeks

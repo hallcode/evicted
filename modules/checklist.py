@@ -34,7 +34,7 @@ def create_checklist():
 
     return redirect(
         url_for(
-            "question",
+            "checklist.question",
             question_id=checklist.get_next_question(),
             checklist_id=checklist.id,
         )
@@ -89,8 +89,8 @@ def save_response(checklist_id):
 
     next_question_id = checklist.get_next_question()
     if next_question_id is None:
-        return redirect(url_for("results", checklist_id=checklist.id))
+        return redirect(url_for("checklist.results", checklist_id=checklist.id))
 
     return redirect(
-        url_for("question", question_id=next_question_id, checklist_id=checklist.id)
+        url_for("checklist.question", question_id=next_question_id, checklist_id=checklist.id)
     )

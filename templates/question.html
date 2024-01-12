@@ -28,8 +28,15 @@
 
             </label>
             <footer class="form-footer">
-                <sl-button type="submit" variant="primary">Next</sl-button>
+                <sl-button id="submit-button" type="submit" variant="primary">Next</sl-button>
             </footer>
         </form>
     </section>
+
+    <script>
+    let element = document.getElementById("submit-button")
+    element.addEventListener("click", function (event) {
+        event.target.toggleAttribute('loading')
+    })
+    </script>
 {% endblock %}

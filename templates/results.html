@@ -5,53 +5,54 @@
         <sl-breadcrumb>
             <sl-breadcrumb-item href="{{ url_for("index") }}">Home</sl-breadcrumb-item>
             <sl-breadcrumb-item href="{{ url_for('checklist.pre_check') }}">Checklist</sl-breadcrumb-item>
-            <sl-breadcrumb-item href="{{ url_for('checklist.results', checklist_id=checklist.id) }}">Results</sl-breadcrumb-item>
+            <sl-breadcrumb-item href="{{ url_for('checklist.results', checklist_id=checklist.id) }}">Results
+            </sl-breadcrumb-item>
         </sl-breadcrumb>
     </section>
     <section>
-        <header class="toolbar">
-            <h2 class="title">Eviction Summary</h2>
-            <nav>
-                <sl-dropdown>
-                    <sl-button slot="trigger" caret>Menu</sl-button>
-                    <sl-menu>
-                        <sl-menu-item>
-                            <sl-icon slot="prefix" name="send"></sl-icon>
-                            Share
-                        </sl-menu-item>
-                        <sl-menu-item>
-                            <sl-icon slot="prefix" name="cloud-download"></sl-icon>
-                            Download PDF
-                        </sl-menu-item>
-                        <sl-menu-item>
-                            <sl-icon slot="prefix" name="trash"></sl-icon>
-                            Delete...
-                        </sl-menu-item>
-                    </sl-menu>
-                </sl-dropdown>
-            </nav>
+        <header class="hero">
+            <h1 class="title">Eviction Summary</h1>
+            <p class="reference"><strong>Reference:</strong>
+                {% if checklist.get_response("reference") != None %}
+                    {{ checklist.get_response("reference") }}
+                {% else %}
+                    {{ checklist.id }}
+                {% endif %}
+            </p>
         </header>
-        <div class="reference"><strong>Reference:</strong>
-            {% if checklist.get_response("reference") != None %}
-                {{ checklist.get_response("reference") }}
-            {% else %}
-                {{ checklist.id }}
-            {% endif %}
-        </div>
     </section>
 
-    <article>
+    <section class="left-sidebar">
         <nav>
-            <h2>Contents</h2>
-            <a href="#observations">Observations</a>
-            <a href="#tenancy">Tenancy details</a>
-            <a href="#notice">Details of notice</a>
-        </nav>
-        <section>
+            <label for="nav-switch"><h2>Contents</h2></label>
+            <input id="nav-switch" type="checkbox">
+            <div class="marker"></div>
 
+            <ul class="menu">
+                <li><a href="#observations">Observations</a></li>
+                <li><a href="#tenancy">Tenancy details</a></li>
+                <li><a href="#notice">Details of notice</a></li>
+            </ul>
+
+            <div class="buttons">
+                <sl-button size="small">
+                    Share this page
+                    <sl-icon slot="suffix" name="share"></sl-icon>
+                </sl-button>
+                <sl-button size="small">
+                    Download PDF
+                    <sl-icon slot="suffix" name="download"></sl-icon>
+                </sl-button>
+                <sl-button size="small" variant="danger" outline>
+                    Delete your data
+                    <sl-icon slot="suffix" name="trash"></sl-icon>
+                </sl-button>
+            </div>
+        </nav>
+        <article>
             {% include 'results/observations.html' %}
             {% include 'results/tenancy.html' %}
             {% include 'results/notice.html' %}
-        </section>
-    </article>
+        </article>
+    </section>
 {% endblock %}
