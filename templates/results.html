@@ -2,21 +2,33 @@
 
 {% block body %}
     <section>
+        <sl-breadcrumb>
+            <sl-breadcrumb-item href="{{ url_for("index") }}">Home</sl-breadcrumb-item>
+            <sl-breadcrumb-item href="{{ url_for('checklist.pre_check') }}">Checklist</sl-breadcrumb-item>
+            <sl-breadcrumb-item href="{{ url_for('checklist.results', checklist_id=checklist.id) }}">Results</sl-breadcrumb-item>
+        </sl-breadcrumb>
+    </section>
+    <section>
         <header class="toolbar">
             <h2 class="title">Eviction Summary</h2>
             <nav>
-                <sl-button size="small">
-                    <sl-icon slot="prefix" name="send"></sl-icon>
-                    Share
-                </sl-button>
-                <sl-button size="small">
-                    <sl-icon slot="prefix" name="cloud-download"></sl-icon>
-                    Download PDF
-                </sl-button>
-                <sl-button size="small" variant="danger">
-                    <sl-icon slot="prefix" name="trash"></sl-icon>
-                    Delete
-                </sl-button>
+                <sl-dropdown>
+                    <sl-button slot="trigger" caret>Menu</sl-button>
+                    <sl-menu>
+                        <sl-menu-item>
+                            <sl-icon slot="prefix" name="send"></sl-icon>
+                            Share
+                        </sl-menu-item>
+                        <sl-menu-item>
+                            <sl-icon slot="prefix" name="cloud-download"></sl-icon>
+                            Download PDF
+                        </sl-menu-item>
+                        <sl-menu-item>
+                            <sl-icon slot="prefix" name="trash"></sl-icon>
+                            Delete...
+                        </sl-menu-item>
+                    </sl-menu>
+                </sl-dropdown>
             </nav>
         </header>
         <div class="reference"><strong>Reference:</strong>

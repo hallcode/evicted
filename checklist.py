@@ -4,18 +4,15 @@ import datetime
 from dateutil.relativedelta import relativedelta
 import secrets
 from flask import abort
+from utils import str_to_bool
 
 
 class Checklist:
     # This is a bit of a god class but, this is a simple app so...
 
     NOTICE_MAP = {
-        "s21": {
-            "name": "Housing Act 1988, s 21"
-        },
-        "s8": {
-            "name": "Housing Act 1988, s 8"
-        }
+        "s21": {"name": "Housing Act 1988, s 21"},
+        "s8": {"name": "Housing Act 1988, s 8"},
     }
 
     def __init__(self, checklist_id=None):
@@ -39,12 +36,12 @@ class Checklist:
                     if isinstance(question["options"], str):
                         with open(f'./data/{question["options"]}') as yaml_file:
                             options = yaml.safe_load(yaml_file)
-                            question['options'] = {}
+                            question["options"] = {}
                             for key, value in options.items():
                                 if isinstance(value, str):
-                                    question['options'][key] = value
+                                    question["options"][key] = value
                                 else:
-                                    question['options'][key] = value['name']
+                                    question["options"][key] = value["name"]
 
                 self.questions.append(question)
 
@@ -60,7 +57,7 @@ class Checklist:
 
         for r in self.responses:
             if r["id"] == question_id:
-                return r["value"]
+                return str_to_bool(r["value"])
 
     def set_answered_questions(self):
         answered_questions = self.get_answered_questions()
@@ -71,13 +68,13 @@ class Checklist:
         if self.id is None:
             self.id = secrets.token_urlsafe(12)
 
-        path = f'./checklists/{self.id}.yaml'
+        path = f"./checklists/{self.id}.yaml"
         try:
             with open(path, "x") as responses_file:
                 responses_format = {
                     "start": self.start_time,
                     "last_change": datetime.datetime.now(),
-                    "responses": self.responses
+                    "responses": self.responses,
                 }
                 responses_file.write(yaml.safe_dump(responses_format))
         except FileExistsError:
@@ -88,6 +85,10 @@ class Checklist:
         self.start_time = responses_format["start"]
         self.last_change_time = responses_format["last_change"]
 
+        for r in self.responses:
+            # Cast booleans
+            r["value"] = str_to_bool(r["value"])
+
         return self.responses
 
     def save(self):
@@ -97,10 +98,10 @@ class Checklist:
         responses_format = {
             "start": self.start_time,
             "last_change": datetime.datetime.now(),
-            "responses": self.responses
+            "responses": self.responses,
         }
 
-        path = f'./checklists/{self.id}.yaml'
+        path = f"./checklists/{self.id}.yaml"
         with open(path, "w") as responses_file:
             responses_file.write(yaml.safe_dump(responses_format))
 
@@ -113,7 +114,10 @@ class Checklist:
             if hasattr(self, method_name):
                 should_show = getattr(self, method_name)
                 if callable(should_show):
-                    if not should_show():
+                    try:
+                        if not should_show():
+                            continue
+                    except:
                         continue
                 else:
                     if not should_show:
@@ -139,18 +143,24 @@ class Checklist:
 
         if question["type"] == "date":
             try:
-                value = datetime.datetime(year=int(kwargs[f"{question_id}_year"]),
-                                          month=int(kwargs[f"{question_id}_month"]),
-                                          day=int(kwargs[f"{question_id}_day"])).date()
+                value = datetime.datetime(
+                    year=int(kwargs[f"{question_id}_year"]),
+                    month=int(kwargs[f"{question_id}_month"]),
+                    day=int(kwargs[f"{question_id}_day"]),
+                ).date()
             except KeyError:
                 abort(400)
         else:
             value = kwargs[question["id"]]
+            value = str_to_bool(value)
 
-        self.responses.append({
-            "id": question["id"],
-            "value": value
-        })
+        for r in self.responses:
+            if r["id"] == question_id:
+                r["value"] = value
+                self.set_answered_questions()
+                return
+
+        self.responses.append({"id": question["id"], "value": value})
         self.set_answered_questions()
 
     ############################################################################
@@ -159,7 +169,7 @@ class Checklist:
     # They must all return True or False
 
     def show_fixed_term_length(self):
-        return self.get_response("fixed_term") == "Y"
+        return self.get_response("fixed_term")
 
     def show_still_fixed_term(self):
         fixed_term = self.get_response("fixed_term")
@@ -177,10 +187,10 @@ class Checklist:
         return self.get_response("written_notice")
 
     def show_section_8_grounds(self):
-        return self.get_notice_type()['has_grounds']
+        return self.get_notice_type()["has_grounds"]
 
     def show_notice_of_ground(self):
-        return self.get_response("section_8_grounds")['prior_notice']
+        return self.get_s8_ground()["prior_notice"]
 
     def show_educational_establishment(self):
         return self.get_response("section_8_grounds") == "4"
@@ -200,13 +210,19 @@ class Checklist:
         return written_notice and end_date_yn
 
     def show_reference(self):
-        return not self.get_response("is_first_party")
+        return self.get_response("is_first_party") == False
 
     def show_deposit(self):
         return self.get_response("notice_type") == "s21"
 
     def show_deposit_amount(self):
-        return self.get_response('deposit')
+        return self.get_response("deposit")
+
+    def show_landlord_type(self):
+        return self.get_response("rent_paid_to") == "landlord"
+
+    def show_homeless_provision(self):
+        return self.get_response("landlord_type") == "la"
 
     ############################################################################
     # SPECIAL VALUE GETTERS
@@ -217,15 +233,17 @@ class Checklist:
         if ground is None:
             return None
 
-        with open(f'./data/s8grounds.yaml') as yaml_file:
+        with open(f"./data/s8grounds.yaml") as yaml_file:
             grounds = yaml.safe_load(yaml_file)
             ground = grounds[ground]
 
-            notice_start = self.get_response('date_of_notice')
+            notice_start = self.get_response("date_of_notice")
             required_notice = {ground["notice"][1]: int(ground["notice"][0])}
             ground["required_notice"] = datetime.timedelta(**required_notice)
             ground["notice_end"] = notice_start + relativedelta(**required_notice)
-            ground["notice_okay"] = self.get_response('end_of_tenancy_date') >= ground["notice_end"]
+            ground["notice_okay"] = (
+                self.get_response("end_of_tenancy_date") >= ground["notice_end"]
+            )
 
             return ground
 
@@ -234,7 +252,7 @@ class Checklist:
         if notice_id is None:
             return None
 
-        with open(f'./data/notice_types.yaml') as yaml_file:
+        with open(f"./data/notice_types.yaml") as yaml_file:
             notices = yaml.safe_load(yaml_file)
             notice = notices[notice_id]
 
@@ -244,18 +262,44 @@ class Checklist:
                 notice["notice_okay"] = ground["notice_okay"]
                 notice["required_notice"] = ground["required_notice"]
 
-            else:
-                notice_start = self.get_response('date_of_notice')
+            elif "notice" in notice:
+                notice_start = self.get_response("date_of_notice")
                 required_notice = {notice["notice"][1]: int(notice["notice"][0])}
                 notice["required_notice"] = datetime.timedelta(**required_notice)
                 notice["notice_end"] = notice_start + relativedelta(**required_notice)
-                notice["notice_okay"] = self.get_response('end_of_tenancy_date') >= notice["notice_end"]
+                notice["notice_okay"] = (
+                    self.get_response("end_of_tenancy_date") >= notice["notice_end"]
+                )
 
             return notice
 
     def get_notice_length(self):
-        notice = self.get_notice_type()
-        notice_start = self.get_response('date_of_notice')
-        notice_end = self.get_response('end_of_tenancy_date')
+        notice_start = self.get_response("date_of_notice")
+        notice_end = self.get_response("end_of_tenancy_date")
 
         return notice_end - notice_start
+
+    def get_tenancy_type(self):
+        rent_paid_to = self.get_response("rent_paid_to")
+        landlord_type = self.get_response("landlord_type")
+        if rent_paid_to == "none":
+            return "license"
+
+        if rent_paid_to == "live_in":
+            return "lodger"
+
+        if landlord_type == "la" and self.get_response("homeless_provision"):
+            return "license"
+
+        if landlord_type == "la":
+            return "secure"
+
+        if landlord_type == "private" and self.get_response(
+            "start_date"
+        ) < datetime.date(day=15, month=1, year=1989):
+            return "regulated"
+
+        if landlord_type == "housaoc" and not self.get_response("fixed_term"):
+            return "assured"
+
+        return "assured_shorthold"

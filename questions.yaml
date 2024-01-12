@@ -14,6 +14,15 @@ description:
   If you don't you can leave this blank.
 type: text
 ---
+id: rent_paid_to
+label: Who do you pay rent to?
+type: choice
+options:
+  landlord: A landlord (including friend or family member), letting agent, local council, or other organisation
+  live_in: A landlord (including friend or family member) who lives in the same property as you
+  employer: Your employer
+  none: You don't pay rent
+---
 id: landlord_type
 label: What kind of landlord do you have?
 description:
@@ -25,6 +34,15 @@ options:
   la: Local council
   employer: Your employer
   uni: A university or publicly funded further education establishment
+---
+id: homeless_provision
+label: Has the council given you this accommodation as part of a homelessness application?
+description:
+  This applies if the local council has put you up in temporary accommodation or short term
+  accommodation to prevent you from becoming homeless.
+  This does not include if you were allocated a council house after applying to be on the 
+  council's housing list.
+type: yesno
 ---
 id: start_date
 label: When did your tenancy start?

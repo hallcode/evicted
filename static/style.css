@@ -235,17 +235,21 @@ article dt {
     font-weight: bold;
     grid-column: 1 / 2;
     margin: 0;
-    padding: .5ch 1ch .5ch 0;
+    padding: .5rem 1rem .5rem 0;
 }
 
 article dd {
     grid-column: 2 / -1;
     margin: 0;
-    padding: .5ch 0 .5ch 1ch;
+    padding: .5rem 0 .5rem 1rem;
 }
 
 article dt, article dt + dd {
     border-top: 1px solid var(--sl-color-neutral-300)
+}
+
+article dl dd + dd {
+    padding-top: 0;
 }
 
 article ul, article ol {
@@ -282,6 +286,8 @@ article li > p {
 article table {
     text-align: left;
     width: 100%;
+    padding: 0;
+    border-collapse: collapse;
 }
 
 article table th {
@@ -323,8 +329,14 @@ article table th {
         display: none !important;
     }
 
+    article {
+        break-inside: auto;
+    }
+
     article > section {
         grid-column: 1 / -1;
+        break-inside: avoid;
+        break-after: auto;
     }
 
     #site-header h1 {
@@ -337,5 +349,17 @@ article table th {
 
     .title {
         font-size: 2rem;
+    }
+
+    dl {
+        break-inside: auto;
+    }
+
+    dd {
+        break-before: avoid;
+    }
+
+    dt {
+        break-after: avoid;
     }
 }

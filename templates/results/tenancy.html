@@ -1,5 +1,16 @@
 <h2 id="tenancy">Tenancy details</h2>
 <dl>
+    <dt>Tenancy type</dt>
+    <dd>{{ checklist.get_tenancy_type()|to_title }}</dd>
+    <dd>
+        <small>This is calculated based on your answers, but this area of law is complicated
+            so it's possible this is not correct. It's best to check your tenancy agreement and get
+            legal advice to be sure.</small>
+    </dd>
+
+    <dt>Landlord</dt>
+    <dd>{{ checklist.get_response("landlord_type") }}</dd>
+
     <dt>Original start date</dt>
     <dd>
         {{ checklist.get_response("start_date").strftime("%d/%b/%Y") }}
@@ -7,6 +18,13 @@
     <dd>
         {{ checklist.get_response("start_date")|time_ago }}
     </dd>
+
+    <dt>Fixed term</dt>
+    {% if checklist.get_response("fixed_term") %}
+        <dd>{{ checklist.get_response('fixed_term_length') }} months</dd>
+    {% else %}
+        <dd>No</dd>
+    {% endif %}
 
     {% if checklist.get_response("deposit") != None %}
         <dt>Deposit</dt>

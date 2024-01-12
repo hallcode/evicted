@@ -1,6 +1,10 @@
 {% extends 'layout.html' %}
 
 {% block body %}
+    <sl-breadcrumb>
+        <sl-breadcrumb-item href="{{ url_for("index") }}">Home</sl-breadcrumb-item>
+        <sl-breadcrumb-item>Checklist</sl-breadcrumb-item>
+    </sl-breadcrumb>
     <section>
         {{ body_text|safe }}
         <footer>

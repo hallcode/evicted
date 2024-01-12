@@ -20,7 +20,7 @@
         </table>
     </dd>
 
-    {% if checklist.get_response("notice_type") == 's8' %}
+    {% if checklist.get_notice_type()['has_grounds'] %}
         {% if checklist.get_s8_ground() != None %}
             <dt>Grounds</dt>
             <dd>{{ checklist.get_s8_ground()['name'] }}</dd>
